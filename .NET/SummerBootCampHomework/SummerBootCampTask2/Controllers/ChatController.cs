@@ -41,7 +41,7 @@ namespace SummerBootCampTask2.Controllers
             }
 
             var userFriend = dbContext.UserFriends
-                .FirstOrDefault(x => (x.UserId == user.Id || x.FriendId == friend.Id)
+                .FirstOrDefault(x => (x.UserId == user.Id || x.FriendId == user.Id)
                                 && (x.UserId == friend.Id || x.FriendId == friend.Id));
 
             if (userFriend is null)
@@ -49,7 +49,7 @@ namespace SummerBootCampTask2.Controllers
                 return RedirectToAction("Invite", "Invitation", new { id = id });
             }
 
-            var chat = dbContext.Chats.FirstOrDefault(x => (x.FirstUserId == user.Id || x.SecondUserId == friend.Id)
+            var chat = dbContext.Chats.FirstOrDefault(x => (x.FirstUserId == user.Id || x.SecondUserId == user.Id)
                                 && (x.FirstUserId == friend.Id || x.SecondUserId == friend.Id));
 
             return View(new ChatViewModel
@@ -68,9 +68,11 @@ namespace SummerBootCampTask2.Controllers
 
             var user = users.FirstOrDefault(user => user.Email == User.Identity.Name);
             var friend = users.FirstOrDefault(user => user.Id == model.FriendId);
+            var chatId = dbContext.Chats.FirstOrDefault(x => (x.FirstUserId == user.Id || x.SecondUserId == user.Id)
+                                                        && (x.FirstUserId == friend.Id || x.SecondUserId == friend.Id)).Id;
             var message = new Message
             {
-                ChatId = model.Id,
+                ChatId = chatId,
                 SenderId = user.Id,
                 RecipientId = model.FriendId,
                 Data = model.NewMessage.Message.Data,
@@ -91,11 +93,13 @@ namespace SummerBootCampTask2.Controllers
                 {
                     Id = message.SenderId,
                     UserName = message.SenderId == user.Id ? user.UserName : friend.UserName,
+                    Email = message.SenderId == user.Id ? user.Email : friend.Email,
                 },
                 Recipient = new ParticipantViewModel
                 {
                     Id = message.RecipientId,
                     UserName = message.RecipientId == user.Id ? user.UserName : friend.UserName,
+                    Email = message.SenderId == user.Id ? user.Email : friend.Email,
                 },
                 Message = encryptionService.Decrypt(message, GetKey(message.SenderId, user, friend)),
             }).ToList();

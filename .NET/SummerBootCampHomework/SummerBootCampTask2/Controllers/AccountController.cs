@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SummerBootCampTask2.Contexts;
 using SummerBootCampTask2.CoreModels;
@@ -85,6 +86,51 @@ namespace SummerBootCampTask2.Controllers
             }
 
             return View(model);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var user = dbContext.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
+
+            return View(new AccountViewModel
+            {
+                UserName = user.UserName,
+                Email = user.Email,
+                Password = user.Password,             
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Index(AccountViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = dbContext.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
+
+                if (user.Email != model.Email)
+                {
+                    if (!dbContext.Users.Any(x => x.Email == model.Email))
+                    {
+                        user.Email = model.Email;
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "UserName is already taken!");
+                    }
+                }
+               
+                user.UserName = model.UserName;
+                user.Password = model.Password;
+
+                dbContext.SaveChanges();
+            }
+
+            await Authenticate(model.Email);
+
+            return RedirectToAction("Index", "Account");
         }
 
         public async Task<IActionResult> Logout()

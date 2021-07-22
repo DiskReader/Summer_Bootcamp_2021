@@ -1,0 +1,92 @@
+﻿@model SummerBootCampTask2.Models.ChatViewModel
+
+@if (Model.Messages.Any())
+{ 
+    <div class="chat">
+        @foreach (var item in Model.Messages)
+        {
+            @if (Model.FriendId != item.Recipient.Id)
+            {
+                <div>
+                    <div class="message">
+                        <div class="email">
+                            @Html.DisplayFor(modelItem => item.Sender.Email)
+                        </div>
+                        @Html.DisplayFor(modelItem => item.Message.Data)
+                    </div>
+                </div> 
+            }
+            else
+            {
+                <div>
+                    <div class="message right-message">
+                        <div class="email">
+                            @Html.DisplayFor(modelItem => item.Sender.Email)
+                        </div>
+                        @Html.DisplayFor(modelItem => item.Message.Data)
+                        <div>
+                            <a asp-controller="Message" asp-action="Edit" asp-route-id="@item.Message.Id">Изменить</a>
+                            <a asp-controller="Message" asp-action="Delete" asp-route-id="@item.Message.Id">Удалить</a>
+                        </div>
+                    </div>                  
+                </div>
+            }
+        }
+    </div> 
+}
+else
+{
+    <h2>У Вас пока нет сообщений с этим пользователем.</h2>
+}
+
+<div>
+    <form asp-action="SendMessage">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="FriendId" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>          
+        <div class="form-group input-block">
+            <input asp-for="NewMessage.Message.Data" class="form-control text-input" />
+            <span asp-validation-for="NewMessage.Message.Data" class="text-danger"></span>
+            <input type="submit" value="Отправить" class="btn btn-primary" />
+        </div>
+        @*<div class="form-group">
+            <input type="submit" value="Отправить" class="btn btn-primary" />
+        </div>*@            
+    </form>
+</div>
+
+<div>
+    <a asp-controller="User" asp-action="Index">К списку пользователей</a>
+</div>
+
+<style>
+    .email {
+        font-size: 10px;
+    }
+    .chat {
+        max-height: 500px;
+        width:min-content;
+        border: 1px solid gray;
+        border-radius:10px;
+        overflow-y:auto;
+    }
+    .message {
+        width:max-content;
+        max-width:300px;
+        border: 1px solid gray;
+        border-radius: 10px;
+        margin: 5px 5px 0px;
+        padding: 5px;
+        overflow-wrap: break-word;
+    }
+    .right-message {
+        min-width:150px;
+        margin-left: 500px;
+    }
+    .text-input {
+        width:400px;
+    }
+    .input-block {
+        display:flex;
+    }
+</style>

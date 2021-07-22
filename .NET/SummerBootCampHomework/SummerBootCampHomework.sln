@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppTask1", "ConsoleAppTask1\ConsoleAppTask1.csproj", "{5D3A6A6D-C540-45F2-8D08-A1ADDB1CB152}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SummerBootCampHomework", "SummerBootCampTask2\SummerBootCampHomework.csproj", "{B75A82FE-411D-47D5-98EA-3AD5A31D64E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5D3A6A6D-C540-45F2-8D08-A1ADDB1CB152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D3A6A6D-C540-45F2-8D08-A1ADDB1CB152}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D3A6A6D-C540-45F2-8D08-A1ADDB1CB152}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D3A6A6D-C540-45F2-8D08-A1ADDB1CB152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B75A82FE-411D-47D5-98EA-3AD5A31D64E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B75A82FE-411D-47D5-98EA-3AD5A31D64E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B75A82FE-411D-47D5-98EA-3AD5A31D64E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B75A82FE-411D-47D5-98EA-3AD5A31D64E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E19B24EA-B9B0-4E49-8741-9A2F5BA0E0AF}
+		SolutionGuid = {16BDF1AF-233C-42D4-A1E9-B220B5C378A8}
 	EndGlobalSection
 EndGlobal
